@@ -14,6 +14,8 @@ class SettingsView: UIView {
   var isOn: Bool = false // Button Flag
 
   
+  
+
 
   lazy var viewAnimated: UIView = {
     var animatedView = UIView()
@@ -72,6 +74,7 @@ class SettingsView: UIView {
       })
       UIView.animate(withDuration: 1.0) { [self] in
         viewAnimated.backgroundColor = .systemGray
+        viewAnimated.layer.cornerRadius = 20
         self.layoutIfNeeded()
       }
 
@@ -87,6 +90,7 @@ class SettingsView: UIView {
 
       UIView.animate(withDuration: 1.0) { [self] in
         viewAnimated.backgroundColor = .red
+        viewAnimated.layer.cornerRadius = 0
         self.layoutIfNeeded()
       }
     }
