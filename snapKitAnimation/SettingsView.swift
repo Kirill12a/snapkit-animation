@@ -14,7 +14,13 @@ class SettingsView: UIView {
   var isOn: Bool = false // Button Flag
 
   
-  
+  lazy var nameLabel: UILabel = {
+    var label = UILabel()
+    label.text = "Say Hello"
+    label.numberOfLines = 0
+    label.backgroundColor = .yellow
+    return label
+  }()
 
 
   lazy var viewAnimated: UIView = {
@@ -36,6 +42,7 @@ class SettingsView: UIView {
     super.init(frame: frame)
     constraintAnimatedView()
     constraintButton()
+    constarintLabel()
   }
 
   required init?(coder: NSCoder) {
@@ -43,21 +50,29 @@ class SettingsView: UIView {
   }
 
 
+  func constarintLabel(){
+    self.addSubview(nameLabel)
+    nameLabel.snp.makeConstraints { make in
+      make.top.equalTo(buttonChange.snp_bottomMargin).offset(50)
+      make.centerX.equalToSuperview()
+    }
+  }
+
   func constraintAnimatedView(){
-   self.addSubview(viewAnimated)
-   viewAnimated.snp.makeConstraints({ make in
-     make.center.equalToSuperview()
-     make.width.height.equalTo(200)
-   })
- }
+    self.addSubview(viewAnimated)
+    viewAnimated.snp.makeConstraints({ make in
+      make.center.equalToSuperview()
+      make.width.height.equalTo(200)
+    })
+  }
 
   func constraintButton(){
-   self.addSubview(buttonChange)
-   buttonChange.snp.makeConstraints { make in
-     make.top.equalTo(50)
-     make.centerX.equalToSuperview()
-   }
- }
+    self.addSubview(buttonChange)
+    buttonChange.snp.makeConstraints { make in
+      make.top.equalTo(50)
+      make.centerX.equalToSuperview()
+    }
+  }
 
 
   @objc func onButton()
@@ -65,9 +80,14 @@ class SettingsView: UIView {
 
     if isOn == false { // если фолс
       self.isOn.toggle() // change true
-      // reset constraint
+      /// ------------
+      nameLabel.snp.remakeConstraints { make in
+        make.width.height.equalTo(70)
+        make.centerX.bottom.equalToSuperview().inset(5)
+      }
+      /// -------------
       viewAnimated.snp.remakeConstraints({ (make) in
-        make.bottom.equalToSuperview().offset(-10)
+        make.bottom.equalToSuperview().inset(10)
         make.centerX.equalToSuperview()
         make.width.equalTo(50)
         make.height.equalTo(50)
@@ -78,10 +98,19 @@ class SettingsView: UIView {
         self.layoutIfNeeded()
       }
 
-
+      //--------------
     } else {
+      //--------------
 
       self.isOn.toggle()
+
+      /// ------------
+      nameLabel.snp.remakeConstraints { make in
+        make.top.equalTo(buttonChange.snp_bottomMargin).offset(50)
+        make.centerX.equalToSuperview()
+      }
+
+      /// ------------
       viewAnimated.snp.remakeConstraints({ (make) in
         make.center.equalToSuperview()
         make.width.equalTo(200)
